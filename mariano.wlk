@@ -90,9 +90,9 @@ object mariano {
 
 
 //   Este es con clases
-//   method baniar(unaGolosina) {
-//       const golosinaBaniada = new GolosinaBaniada(golosinaBase=unaGolosina)
-//       self.comprar(golosinaBaniada)
-//   }
+   method baniar(unaGolosina) {
+       const golosinaBaniada = new GolosinaBaniada(golosinaBase=unaGolosina)
+       self.comprar(golosinaBaniada)
+   }
 
 }

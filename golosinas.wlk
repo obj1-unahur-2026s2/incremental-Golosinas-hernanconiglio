@@ -1,114 +1,101 @@
-object bombon {
-    var peso = 15
+class Golosina {
+    var peso
     method peso() = peso
-    method precio() = 5
-    method sabor() = frutilla
-    method esLibreDeGluten() = true
-    method recibirMordisco() {
+    method esLibreDeGluten() = false
+    method precio()
+    method sabor()
+    method recibirMordisco()
+}
+
+
+class Bombon inherits Golosina(peso=15) {
+    override method precio() = 5
+    override method sabor() = frutilla
+    override method esLibreDeGluten() = true
+    override method recibirMordisco() {
         peso = ((peso * 0.8) - 1).max(0)
     }
 }
 
 
-object alfajor {
-    var peso = 300
-    method peso() = peso
-    method precio() = 12
-    method sabor() = chocolate
-    method esLibreDeGluten() = false
-    method recibirMordisco() {
+class Alfajor inherits Golosina(peso=300){
+    override method precio() = 12
+    override method sabor() = chocolate
+    override method recibirMordisco() {
         peso = peso * 0.8
     }    
 }
 
-object caramelo {
-    var peso = 5
-    method peso() = peso
-    method precio() = 1
-    method sabor() = frutilla
-    method esLibreDeGluten() = true
-    method recibirMordisco() {
+class Caramelo inherits Golosina(peso=5) {
+    override method precio() = 1
+    override method sabor() = frutilla
+    override method esLibreDeGluten() = true
+    override method recibirMordisco() {
         peso = (peso - 1).max(0)
     }
 }
 
-object chupetin {
-    var peso = 7
-    method peso() = peso
-    method precio() = 2
-    method sabor() = naranja
-    method esLibreDeGluten() = true
-    method recibirMordisco() {
+class Chupetin inherits Golosina(peso=7) {
+    override method precio() = 2
+    override method sabor() = naranja
+    override method esLibreDeGluten() = true
+    override method recibirMordisco() {
         peso = peso - peso * 0.1 * peso.div(2).min(1)
         // if (peso >= 2) { peso = peso * 0.9 }
     }
 }
 
-object oblea {
-    var peso = 250
-    method peso() = peso
-    method precio() = 5
-    method sabor() = vainilla
-    method esLibreDeGluten() = false
-    method recibirMordisco() {
+class Oblea inherits Golosina(peso=250){
+    override method precio() = 5
+    override method sabor() = vainilla
+    override method recibirMordisco() {
         peso = 0.max(peso - if(peso>70) peso * 0.5 else peso * 0.25) 
     }
 }
 
-object chocolatin {
-    var pesoInicial = 0
+class Chocolatin inherits Golosina(peso=0) {
+    const pesoInicial
     var gramosConsumidos = 0
-    method setPesoInicial(unValor) {pesoInicial = unValor}
-    method peso() = 0.max(pesoInicial - gramosConsumidos)
-    method precio() = 0.5 * pesoInicial
-    method sabor() = chocolate
-    method esLibreDeGluten() = false
-    method recibirMordisco() {
+    override method peso() = 0.max(pesoInicial - gramosConsumidos)
+    override method precio() = 0.5 * pesoInicial
+    override method sabor() = chocolate
+    override method recibirMordisco() {
         gramosConsumidos += 2 
     }  
 }
 
-object golosinaBaniada {
-    var golosinaBase = caramelo
+class GolosinaBaniada inherits Golosina(peso=0) {
+    const golosinaBase
     var gramosDeBaniado = 4
-    method cambiarGolosinaBase(unaGolosina) {
-        golosinaBase = unaGolosina
-        gramosDeBaniado = 4
-    }
-    method precio() = golosinaBase.precio() + 2
-    method peso() = golosinaBase.peso() + gramosDeBaniado
-    method sabor() = golosinaBase.sabor()
-    method esLibreDeGluten() = golosinaBase.esLibreDeGluten()
-    method recibirMordisco() {
+    override method precio() = golosinaBase.precio() + 2
+    override method peso() = golosinaBase.peso() + gramosDeBaniado
+    override method sabor() = golosinaBase.sabor()
+    override method esLibreDeGluten() = golosinaBase.esLibreDeGluten()
+    override method recibirMordisco() {
         golosinaBase.recibirMordisco()
         gramosDeBaniado = (gramosDeBaniado - 2).max(0)
     }  
 }
 
-object pastillaTuttiFrutti {
-    var esLibreDeGluten = false
+class PastillaTuttiFrutti inherits Golosina(peso=5) {
+    const esLibreDeGluten
     var sabor = frutilla
-    method peso() = 5
-    method hacerLibreDeGluten() {esLibreDeGluten=true}
-    method hacerNoLibreDeGluten() {esLibreDeGluten=false}
-    method precio() = if(esLibreDeGluten) 7 else 10
-    method esLibreDeGluten() = esLibreDeGluten
-    method sabor() = sabor
-    method recibirMordisco() {
+    override method precio() = if(esLibreDeGluten) 7 else 10
+    override method esLibreDeGluten() = esLibreDeGluten
+    override method sabor() = sabor
+    override method recibirMordisco() {
         sabor = sabor.siguienteSabor()
     }
 }
 
-object pastillaTuttiFrutti2 {
-    var esLibreDeGluten = false
+class PastillaTuttiFrutti2 inherits Golosina(peso=5) {
+    const esLibreDeGluten
     var mordiscos = 0
-    method peso() = 5
-    method hacerLibreDeGluten() {esLibreDeGluten=true}
-    method hacerNoLibreDeGluten() {esLibreDeGluten=false}
-    method precio() = if(esLibreDeGluten) 7 else 10
-    method esLibreDeGluten() = esLibreDeGluten
-    method sabor() = [frutilla,chocolate,naranja].get(mordiscos%3)
-    method recibirMordisco() {
+    const sabores = [frutilla,chocolate,naranja]
+    override method precio() = if(esLibreDeGluten) 7 else 10
+    override method esLibreDeGluten() = esLibreDeGluten
+    override method sabor() = sabores.get(mordiscos%sabores.size())
+    override method recibirMordisco() {
         mordiscos += 1
     }
 }
@@ -121,3 +108,52 @@ object naranja { method siguienteSabor() = frutilla }
 
 object vainilla { }
 
+class BombonDuro inherits Bombon {
+    override method recibirMordisco() {
+        peso = (peso - 1).max(0)
+    }
+    method gradoDeDureza() = 1 + if(peso>12) 2 else if(peso>=8) 1 else 0
+    method gradoDeDurezaPro() = 1 + [peso>=8, peso > 12].count({ cumple => cumple })
+}
+
+class CarameloDeSabor inherits Caramelo {
+    const sabor
+    override method sabor() = sabor
+}
+
+class CarameloRelleno inherits Caramelo {
+    var sabor = frutilla
+    override method sabor() = sabor
+    override method recibirMordisco() {
+        super()
+        sabor = chocolate
+    }
+    override method precio() = super() + 1
+}
+
+class ObleaCrujiente inherits Oblea {
+    var mordiscos = 0
+    override method recibirMordisco() {
+        super()
+        peso = peso - if(self.estaDebil()) 3 else 0
+        mordiscos += 1
+    }
+    method estaDebil() = mordiscos > 3
+}
+
+class ChocolatinVIP inherits Chocolatin {
+    override method peso() = super() * (1 + self.humedad())
+    method humedad() = heladeraDeMariano.coeficienteDeHumedad()
+}
+
+class ChocolatinPremium inherits ChocolatinVIP {
+    override method humedad() = heladeraDeMariano.coeficienteDeHumedad() / 2
+}
+
+object heladeraDeMariano {
+    var coeficienteDeHumedad = 0
+    method cambiarCoeficienteDeHumedad(nuevoValor) {
+        coeficienteDeHumedad = 0.max(nuevoValor).min(1)
+    }
+    method coeficienteDeHumedad() = coeficienteDeHumedad
+}
